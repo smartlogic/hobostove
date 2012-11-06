@@ -1,3 +1,11 @@
+PATH
+  remote: .
+  specs:
+    hobostove (0.0.1)
+      activesupport
+      ncurses-ruby
+      tinder
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -37,6 +45,4 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
-  ncurses-ruby
-  tinder
+  hobostove!

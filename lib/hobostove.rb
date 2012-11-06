@@ -70,7 +70,7 @@ class InputPanel < Panel
   end
 end
 
-class Campfire
+class Hobostove
   attr_reader :messages
 
   def connect
