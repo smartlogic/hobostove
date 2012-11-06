@@ -42,7 +42,7 @@ class Panel < Struct.new(:height, :width, :starty, :startx, :options)
 
     Ncurses.werase(@win)
 
-    @strings.each_with_index do |string, i|
+    @strings.last(height - 2).each_with_index do |string, i|
       @win.mvaddstr(i + 1, 2, string)
     end
 
@@ -119,7 +119,9 @@ class Hobostove
     Thread.new do
       room.listen do |message|
         if message[:type] = "TextMessage"
-          @messages_panel << "#{message.user.name}: #{message[:body]}"
+          message = "#{message.user.name}: #{message[:body]}"
+          @messages_panel << message
+          `notify-send "#{message}"`
         end
       end
     end
