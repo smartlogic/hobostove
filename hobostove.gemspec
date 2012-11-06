@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "tinder"
   s.add_runtime_dependency "activesupport"
   s.add_runtime_dependency "ncurses-ruby"
+  s.add_runtime_dependency "notify"
 
   s.files        = Dir.glob("lib/**/*")
   s.require_path = 'lib'

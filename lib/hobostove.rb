@@ -3,6 +3,7 @@
 require 'tinder'
 require 'active_support/core_ext'
 require 'ncurses'
+require 'notify'
 
 class Configuration
   class << self
@@ -76,6 +77,7 @@ class Hobostove
   def connect
     @current_message = ""
     @running = true
+    @users = []
 
     start_ncurses
 
@@ -96,6 +98,8 @@ class Hobostove
         speak
       when 127 # backspace
         @current_message = @current_message.first(@current_message.size - 1)
+      when 9 # tab
+        @current_message = "#{@users.find { |user| user =~ /^#@current_message/ }}: "
       else
         @current_message << ch.chr
       end
@@ -121,7 +125,7 @@ class Hobostove
         if message[:type] = "TextMessage"
           message = "#{message.user.name}: #{message[:body]}"
           @messages_panel << message
-          `notify-send "#{message}"`
+          Notify.notify Configuration.room, message
         end
       end
     end
@@ -167,6 +171,7 @@ class Hobostove
 
   def load_users
     room.users.each do |user|
+      @users << user["name"]
       @users_panel << user["name"]
     end
   end
