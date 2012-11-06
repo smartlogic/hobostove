@@ -75,6 +75,7 @@ class Campfire
 
   def connect
     @current_message = ""
+    @running = true
 
     start_ncurses
 
@@ -89,12 +90,12 @@ class Campfire
   end
 
   def main
-    while ch = Ncurses.getch
+    while @running && (ch = Ncurses.getch)
       case ch
-      when 27
-        break
-      when 10
+      when 10 # enter
         speak
+      when 127 # backspace
+        @current_message = @current_message.first(@current_message.size - 1)
       else
         @current_message << ch.chr
       end
@@ -105,13 +106,17 @@ class Campfire
   end
 
   def speak
+    if @current_message == "/quit"
+      @running = false
+      return
+    end
+
     room.speak @current_message
     @current_message = ""
   end
 
   def stream
     Thread.new do
-      @messages_panel << "listening"
       room.listen do |message|
         if message[:type] = "TextMessage"
           @messages_panel << "#{message.user.name}: #{message[:body]}"
