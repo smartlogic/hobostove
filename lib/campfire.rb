@@ -16,19 +16,41 @@ class Configuration
   end
 end
 
-class Messages < Array
-  def <<(message)
-    # puts message
-    super
-  end
-end
-
-class Panel < Struct.new(:lines, :cols, :x, :y)
+class Panel < Struct.new(:height, :width, :starty, :startx, :options)
   def initialize(*args)
     super
-    @win = Ncurses.newwin(lines, cols, x, y)
+    @win = Ncurses.newwin(height, width, starty, startx)
     Ncurses.box(@win, 0, 0)
-    @win = Ncurses::Panel.new_panel(@win)
+    @panel = Ncurses::Panel.new_panel(@win)
+    @strings = []
+  end
+
+  def options
+    super || {}
+  end
+
+  def wrap_lines?
+    !options[:nowrap]
+  end
+
+  def <<(string)
+    if wrap_lines?
+      @strings << string.first(width - 4)
+    else
+      @strings << string
+    end
+
+    Ncurses.werase(@win)
+
+    @strings.each_with_index do |string, i|
+      @win.mvaddstr(i + 1, 2, string)
+    end
+
+    Ncurses.box(@win, 0, 0)
+
+    Ncurses::Panel.update_panels
+    Ncurses.doupdate
+    Ncurses.refresh
   end
 end
 
@@ -36,13 +58,12 @@ class Campfire
   attr_reader :messages
 
   def connect
-    puts "Connecting to #{Configuration.room}..."
-    @messages = Messages.new
-
     start_ncurses
 
     load_users
     transcript
+
+    Ncurses.getch
 
 #    stream
 
@@ -68,7 +89,7 @@ class Campfire
     transcript.each do |message|
       next unless (7.hours.ago..Time.now).cover?(message[:timestamp])
       if message[:message]
-        messages << "#{user(message[:user_id])[:name]}: #{message[:message]}"
+        @messages_panel << "#{user(message[:user_id])[:name]}: #{message[:message]}"
       end
     end
   end
@@ -80,9 +101,9 @@ class Campfire
     Ncurses.cbreak
     Ncurses.noecho
 
-    users_panel = Panel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
-    messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0)
-    message_panel = Panel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
+    @users_panel = Panel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
+    @messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0)
+    @message_panel = Panel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0, :nowrap => true)
 
     Ncurses::Panel.update_panels
 
@@ -98,10 +119,9 @@ class Campfire
   end
 
   def load_users
-#    puts "User list"
-#    room.users.each do |user|
-#      puts "- #{user["name"]}"
-#    end
+    room.users.each do |user|
+      @users_panel << user["name"]
+    end
   end
 
   def user(user_id)
