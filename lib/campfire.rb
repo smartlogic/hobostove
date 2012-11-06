@@ -54,30 +54,70 @@ class Panel < Struct.new(:height, :width, :starty, :startx, :options)
   end
 end
 
+class InputPanel < Panel
+  def <<(string)
+    @strings = []
+
+    super
+  end
+
+  def message
+    @strings.first
+  end
+
+  def update_cursor
+    @win.wmove(1, message.size)
+  end
+end
+
 class Campfire
   attr_reader :messages
 
   def connect
+    @current_message = ""
+
     start_ncurses
 
     load_users
     transcript
 
-    Ncurses.getch
+    stream
 
-#    stream
+    main
 
     stop_ncurses
   end
 
+  def main
+    while ch = Ncurses.getch
+      case ch
+      when 27
+        break
+      when 10
+        speak
+      else
+        @current_message << ch.chr
+      end
+
+      @message_panel << @current_message
+      @message_panel.update_cursor
+    end
+  end
+
+  def speak
+    room.speak @current_message
+    @current_message = ""
+  end
+
   def stream
     Thread.new do
+      @messages_panel << "listening"
       room.listen do |message|
         if message[:type] = "TextMessage"
-          messages << "#{message.user.name}: #{message[:body]}"
+          @messages_panel << "#{message.user.name}: #{message[:body]}"
         end
       end
-    end.join
+    end
   end
 
   def room
@@ -102,8 +142,8 @@ class Campfire
     Ncurses.noecho
 
     @users_panel = Panel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
-    @messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0)
-    @message_panel = Panel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0, :nowrap => true)
+    @messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0, :nowrap => true)
+    @message_panel = InputPanel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
 
     Ncurses::Panel.update_panels
 
