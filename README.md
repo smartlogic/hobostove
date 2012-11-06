@@ -2,7 +2,7 @@
 
 A config.yml is required.
 
-    bin/campfire
+    bin/hobostove
 
 #### config.yml
 	subdomain: domain
