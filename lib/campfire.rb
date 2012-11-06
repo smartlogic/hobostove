@@ -23,6 +23,15 @@ class Messages < Array
   end
 end
 
+class Panel < Struct.new(:lines, :cols, :x, :y)
+  def initialize(*args)
+    super
+    @win = Ncurses.newwin(lines, cols, x, y)
+    Ncurses.box(@win, 0, 0)
+    @win = Ncurses::Panel.new_panel(@win)
+  end
+end
+
 class Campfire
   attr_reader :messages
 
@@ -71,17 +80,9 @@ class Campfire
     Ncurses.cbreak
     Ncurses.noecho
 
-    users = Ncurses.newwin(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
-    Ncurses.box(users, 0, 0)
-    users = Ncurses::Panel.new_panel(users)
-
-    messages = Ncurses.newwin(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0)
-    Ncurses.box(messages, 0, 0)
-    messages = Ncurses::Panel.new_panel(messages)
-
-    message = Ncurses.newwin(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
-    Ncurses.box(message, 0, 0)
-    message = Ncurses::Panel.new_panel(message)
+    users_panel = Panel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
+    messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0)
+    message_panel = Panel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
 
     Ncurses::Panel.update_panels
 
