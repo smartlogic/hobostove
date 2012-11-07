@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    hobostove (0.0.1)
+    hobostove (0.0.2)
       activesupport
+      gli
       ncurses-ruby
       notify
       tinder
@@ -18,6 +19,7 @@ GEM
       multipart-post (~> 1.1)
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
+    gli (2.4.1)
     hashie (1.2.0)
     http_parser.rb (0.5.3)
     i18n (0.6.1)

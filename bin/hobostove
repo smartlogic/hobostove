@@ -2,5 +2,19 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
 
 require 'hobostove'
+require 'gli'
 
-Hobostove::Window.new.connect
+include GLI::App
+
+program_desc "A command line Campfire client"
+
+desc "Start hobostove"
+command :start do |c|
+  c.action do
+    Hobostove::Window.new.connect
+  end
+end
+
+default_command :start
+
+exit run(ARGV)
