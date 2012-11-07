@@ -1,15 +1,17 @@
-class InputPanel < Panel
-  def <<(string)
-    @strings = []
+module Hobostove
+  class InputPanel < Panel
+    def <<(string)
+      @strings = []
 
-    super
-  end
+      super
+    end
 
-  def message
-    @strings.first
-  end
+    def message
+      @strings.first
+    end
 
-  def update_cursor
-    @win.wmove(1, message.size)
+    def update_cursor
+      @win.wmove(1, message.size)
+    end
   end
 end

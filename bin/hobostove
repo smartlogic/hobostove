@@ -3,4 +3,4 @@ $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(_
 
 require 'hobostove'
 
-Hobostove.new.connect
+Hobostove::Window.new.connect
