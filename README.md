@@ -1,11 +1,6 @@
 # Campfire cli client
 
-A config.yml is required.
-
-Hobostove must be run in the project currently, and executable is not provided when installing the gem.
-
-    cd hobostove
-    bin/hobostove
+A `~/.hobostove.yml` file is required.
 
 #### config.yml
     subdomain: domain
