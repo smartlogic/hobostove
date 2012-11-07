@@ -4,6 +4,7 @@ require 'tinder'
 require 'active_support/core_ext'
 require 'ncurses'
 require 'notify'
+require 'etc'
 
 class Configuration
   class << self
@@ -12,7 +13,12 @@ class Configuration
     end
 
     def config
-      @config ||= YAML.load(File.open("config.yml"))
+      @config ||= YAML.load(File.open(config_file))
+    end
+
+    def config_file
+      user = Etc.getlogin
+      config_file = File.join(Dir.home(user), ".hobostove.yml")
     end
   end
 end
