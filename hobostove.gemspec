@@ -21,5 +21,6 @@ Gem::Specification.new do |s|
 
   s.files        = Dir.glob("lib/**/*")
   s.require_path = 'lib'
+  s.executables  = ['hobostove']
 end
 
