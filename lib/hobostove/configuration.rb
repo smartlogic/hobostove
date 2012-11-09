@@ -13,7 +13,7 @@ module Hobostove
 
       def config_file
         user = Etc.getlogin
-        config_file = File.join(Dir.home(user), ".hobostove.yml")
+        File.join(Dir.home(user), ".hobostove.yml")
       end
     end
   end
