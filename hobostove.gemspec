@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "gli"
 
   s.add_development_dependency "rspec"
+  s.add_development_dependency "fakefs"
 
   s.files        = Dir.glob("lib/**/*")
   s.require_path = 'lib'
