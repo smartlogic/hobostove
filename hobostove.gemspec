@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "notify"
   s.add_runtime_dependency "gli"
 
+  s.add_development_dependency "rspec"
+
   s.files        = Dir.glob("lib/**/*")
   s.require_path = 'lib'
   s.executables  = ['hobostove']
