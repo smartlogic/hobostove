@@ -11,6 +11,10 @@ program_desc "A command line Campfire client"
 desc "Start hobostove"
 command :start do |c|
   c.action do
+    if Hobostove::Setup.run_setup?
+      Hobostove::Setup.new($stdin, $stdout).run
+    end
+
     Hobostove::Window.new.connect
   end
 end
