@@ -56,15 +56,25 @@ module Hobostove
         while true do
           recent = room.recent(10)
           recent.each do |message|
-            next unless message[:body]
             next if messages.include?(message[:id])
             messages << message[:id]
-            message = "#{user(message[:user_id])[:name]}: #{message[:body]}"
-            @messages_panel << message
+
+            handle_message(message)
           end
 
           sleep 1
         end
+      end
+    end
+
+    def handle_message(message)
+      case message.type
+      when "TextMessage"
+        @messages_panel <<  "#{user(message[:user_id])[:name]}: #{message[:body]}"
+      when "EnterMessage"
+        @messages_panel << "\t#{user(message[:user_id])[:name]} joined"
+      when "LeaveMessage"
+        @messages_panel << "\t#{user(message[:user_id])[:name]} left"
       end
     end
 
