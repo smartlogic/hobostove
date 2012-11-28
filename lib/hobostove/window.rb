@@ -5,7 +5,7 @@ module Hobostove
     def connect
       @current_message = ""
       @running = true
-      @users = []
+      @user_names = []
       @messages = []
 
       start_ncurses
@@ -27,7 +27,7 @@ module Hobostove
         when 127 # backspace
           @current_message = @current_message.first(@current_message.size - 1)
         when 9 # tab
-          @current_message = "#{@users.find { |user| user =~ /^#@current_message/ }}: "
+          @current_message = "#{@user_names.find { |user| user =~ /^#@current_message/ }}: "
         else
           @current_message << ch.chr
         end
@@ -94,7 +94,7 @@ module Hobostove
 
     def load_users
       room.users.each do |user|
-        @users << user["name"]
+        @user_names << user["name"]
         @users_panel << user["name"]
       end
     end
