@@ -50,7 +50,7 @@ module Hobostove
     def stream
       Thread.new do
         while true do
-          transcript = room.transcript(Date.today)
+          transcript = room.transcript(Date.today).last(10)
           transcript.each do |message|
             next unless message[:message]
             next if messages.include?(message[:id])
