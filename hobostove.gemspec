@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.summary     = "Command line client for campfire"
   s.description = "Command line client for campfire"
   s.homepage    = "http://github.com/oestrich/hobostove"
+  s.license     = "MIT"
 
   s.required_rubygems_version = ">= 1.3.6"
 
