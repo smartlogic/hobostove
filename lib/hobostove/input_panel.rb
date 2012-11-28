@@ -11,7 +11,7 @@ module Hobostove
     end
 
     def update_cursor
-      @win.wmove(1, message.size)
+      Ncurses.move(Ncurses.LINES - 2, message.size + 2)
     end
   end
 end
