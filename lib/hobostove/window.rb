@@ -50,12 +50,12 @@ module Hobostove
     def stream
       Thread.new do
         while true do
-          transcript = room.transcript(Date.today).last(10)
-          transcript.each do |message|
-            next unless message[:message]
+          recent = room.recent(10)
+          recent.each do |message|
+            next unless message[:body]
             next if messages.include?(message[:id])
             messages << message[:id]
-            message = "#{user(message[:user_id])[:name]}: #{message[:message]}"
+            message = "#{user(message[:user_id])[:name]}: #{message[:body]}"
             @messages_panel << message
           end
 
