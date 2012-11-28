@@ -6,11 +6,11 @@ module Hobostove
       @current_message = ""
       @running = true
       @users = []
+      @messages = []
 
       start_ncurses
 
       load_users
-      transcript
 
       stream
 
@@ -49,28 +49,23 @@ module Hobostove
 
     def stream
       Thread.new do
-        room.listen do |message|
-          if message[:type] = "TextMessage"
-            message = "#{message.user.name}: #{message[:body]}"
+        while true do
+          transcript = room.transcript(Date.today)
+          transcript.each do |message|
+            next unless message[:message]
+            next if messages.include?(message[:id])
+            messages << message[:id]
+            message = "#{user(message[:user_id])[:name]}: #{message[:message]}"
             @messages_panel << message
-            Notify.notify Configuration.room, message
           end
+
+          sleep 3
         end
       end
     end
 
     def room
       @room ||= campfire.find_room_by_name(Configuration.room)
-    end
-
-    def transcript
-      transcript = room.transcript(Date.today)
-      transcript.each do |message|
-        next unless (7.hours.ago..Time.now).cover?(message[:timestamp])
-        if message[:message]
-          @messages_panel << "#{user(message[:user_id])[:name]}: #{message[:message]}"
-        end
-      end
     end
 
     private
