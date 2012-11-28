@@ -20,6 +20,8 @@ module Hobostove
     end
 
     def main
+      room.join
+
       while @running && (ch = Ncurses.getch)
         case ch
         when 10 # enter
@@ -35,6 +37,8 @@ module Hobostove
         @message_panel << @current_message
         @message_panel.update_cursor
       end
+
+      room.leave
     end
 
     def speak
