@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hobostove (0.0.2)
+    hobostove (0.0.3)
       activesupport
       gli
       ncurses-ruby
