@@ -59,7 +59,7 @@ module Hobostove
             @messages_panel << message
           end
 
-          sleep 3
+          sleep 1
         end
       end
     end
