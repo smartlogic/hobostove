@@ -3,7 +3,9 @@ module Hobostove
     def <<(string)
       @strings = []
 
-      super
+      string = string.last(width - 4)
+
+      super(string)
     end
 
     def message
