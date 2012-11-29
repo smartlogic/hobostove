@@ -8,6 +8,10 @@ A `~/.hobostove.yml` file is required. When first running `hobostove` it will he
     token: apitoken
     room: Room to join
 
+## Usage
+
+To quit type `/quit`.
+
 ## Notifications
 
 ### Mac
