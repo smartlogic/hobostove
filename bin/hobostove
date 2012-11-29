@@ -19,6 +19,8 @@ command :start do |c|
       Hobostove::Upgrade.perform
     end
 
+    Hobostove::RoomPicker.new($stdin, $stdout).run
+
     Hobostove::Window.new.connect
   end
 end
