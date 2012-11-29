@@ -70,7 +70,9 @@ module Hobostove
     def handle_message(message)
       case message.type
       when "TextMessage"
-        @messages_panel <<  "#{user(message[:user_id])[:name]}: #{message[:body]}"
+        username = user(message[:user_id])[:name]
+        Notify.notify username, message[:body]
+        @messages_panel <<   "#{username}: #{message[:body]}"
       when "EnterMessage"
         @messages_panel << "\t#{user(message[:user_id])[:name]} joined"
       when "LeaveMessage"
