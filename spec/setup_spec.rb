@@ -30,11 +30,11 @@ describe Hobostove::Setup do
       subject.run
 
       config = YAML.load(File.read(Hobostove::Configuration.config_file))
-      config.should == {
+      config.should == [{
         "subdomain" => "subdomain",
         "token" => "key",
         "room" => "room"
-      }
+      }]
     end
   end
 end

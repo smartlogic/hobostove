@@ -8,7 +8,7 @@ module Hobostove
       end
 
       def config
-        @config ||= YAML.load(File.open(config_file))
+        @config ||= YAML.load(File.open(config_file)).first
       end
 
       def config_file

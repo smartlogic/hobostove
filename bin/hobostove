@@ -15,6 +15,10 @@ command :start do |c|
       Hobostove::Setup.new($stdin, $stdout).run
     end
 
+    if Hobostove::Upgrade.upgrade_config?
+      Hobostove::Upgrade.perform
+    end
+
     Hobostove::Window.new.connect
   end
 end

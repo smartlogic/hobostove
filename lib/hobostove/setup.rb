@@ -22,7 +22,7 @@ module Hobostove
         @stdout.puts "Room (full name)?"
         @settings["room"] = @stdin.gets.chomp
 
-        file.write @settings.to_yaml
+        file.write [@settings].to_yaml
       end
     end
   end
