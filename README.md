@@ -14,4 +14,4 @@ A `~/.hobostove.yml` file is required. When first running `hobostove` it will he
 
 Install the gem `terminal-notifier` and Mountain Lion notifications will work.
 
-    $ gem install termina-notifier
+    $ gem install terminal-notifier
