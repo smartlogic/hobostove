@@ -4,13 +4,27 @@ A `~/.hobostove.yml` file is required. When first running `hobostove` it will he
 
 #### ~/.hobostove.yml
     ---
-    subdomain: domain
-    token: apitoken
-    room: Room to join
+    - subdomain: domain
+      token: apitoken
+      room: Room to join
 
 ## Usage
 
 To quit type `/quit`.
+
+### Multiple rooms
+
+Currently to get multiple rooms you have to manually edit your `~/.hobostove.yml` file. Just add another section that follows the same structure as the first one.
+
+    ---
+    - subdomain: domain
+      token: apitoken
+      room: Room to join
+    - subdomain: domaintwo
+      token: apitokentwo
+      room: Room to join 2
+
+When starting hobostove with mutliple rooms it will ask you which one you want to launch.
 
 ## Installation
 
