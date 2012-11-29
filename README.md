@@ -12,10 +12,10 @@ A `~/.hobostove.yml` file is required. When first running `hobostove` it will he
 
 To quit type `/quit`.
 
-## Notifications
+## Installation
 
 ### Mac
 
-Install the gem `terminal-notifier` and Mountain Lion notifications will work.
+Install the gem `terminal-notifier` and Mountain Lion notifications will work. It also fixes formatting issues.
 
     $ gem install terminal-notifier
