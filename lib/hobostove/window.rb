@@ -24,9 +24,9 @@ module Hobostove
 
       while @running && (ch = Ncurses.getch)
         case ch
-        when 10 # C+j
+        when 14 # C+n
           @messages_panel.scroll_down
-        when 11 # C+k
+        when 16 # C+p
           @messages_panel.scroll_up
         when 10 # enter
           speak
