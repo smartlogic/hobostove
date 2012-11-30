@@ -6,6 +6,7 @@ module Hobostove
       Ncurses.box(@win, 0, 0)
       @panel = Ncurses::Panel.new_panel(@win)
       @strings = []
+      @scroll = 0
     end
 
     def options
@@ -28,12 +29,30 @@ module Hobostove
       refresh
     end
 
+    def scroll_up
+      if @strings.size > printable_area + @scroll
+        @scroll += 1
+      end
+      refresh
+    end
+
+    def scroll_down
+      if @scroll > 0
+        @scroll -= 1
+      end
+      refresh
+    end
+
     private
+
+    def printable_area
+      height - 2
+    end
 
     def refresh
       Ncurses.werase(@win)
 
-      @strings.last(height - 2).each_with_index do |string, i|
+      @strings.last(printable_area + @scroll).first(printable_area).each_with_index do |string, i|
         @win.mvaddstr(i + 1, 2, string)
       end
 

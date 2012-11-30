@@ -24,6 +24,10 @@ module Hobostove
 
       while @running && (ch = Ncurses.getch)
         case ch
+        when 10 # C+j
+          @messages_panel.scroll_down
+        when 11 # C+k
+          @messages_panel.scroll_up
         when 10 # enter
           speak
         when 127 # backspace
@@ -53,7 +57,7 @@ module Hobostove
 
     def stream
       Thread.new do
-        while true do
+        loop do
           recent = room.recent(10)
           recent.each do |message|
             next if messages.include?(message[:id])
