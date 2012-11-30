@@ -30,6 +30,8 @@ module Hobostove
           @messages_panel.scroll_up
         when 10 # enter
           speak
+        when 21 # C-u
+          @current_message = ""
         when 127 # backspace
           @current_message = @current_message.first(@current_message.size - 1)
         when 9 # tab
