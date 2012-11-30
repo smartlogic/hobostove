@@ -25,6 +25,12 @@ module Hobostove
         end
       end
 
+      refresh
+    end
+
+    private
+
+    def refresh
       Ncurses.werase(@win)
 
       @strings.last(height - 2).each_with_index do |string, i|

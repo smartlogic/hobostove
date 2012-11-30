@@ -74,9 +74,13 @@ module Hobostove
         Notify.notify username, message[:body]
         @messages_panel <<   "#{username}: #{message[:body]}"
       when "EnterMessage"
-        @messages_panel << "\t#{user(message[:user_id])[:name]} joined"
+        username = user(message[:user_id])[:name]
+        @messages_panel << "\t#{username} joined"
+        @users_panel.add_user(username)
       when "LeaveMessage"
-        @messages_panel << "\t#{user(message[:user_id])[:name]} left"
+        username = user(message[:user_id])[:name]
+        @messages_panel << "\t#{username} left"
+        @users_panel.remove_user(username)
       end
     end
 
@@ -91,7 +95,7 @@ module Hobostove
       Ncurses.cbreak
       Ncurses.noecho
 
-      @users_panel = Panel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
+      @users_panel = UserPanel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
       @messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0, :nowrap => true)
       @message_panel = InputPanel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
 
@@ -111,7 +115,7 @@ module Hobostove
     def load_users
       room.users.each do |user|
         @user_names << user["name"]
-        @users_panel << user["name"]
+        @users_panel.add_user(user["name"])
       end
     end
 
