@@ -23,9 +23,7 @@ module Hobostove
       if wrap_lines?
         @strings << string.first(width - 4)
       else
-        word_wrap(string, width - 5).each do |line|
-          @strings << line
-        end
+        @strings << string
       end
 
       refresh
@@ -63,16 +61,6 @@ module Hobostove
       Ncurses::Panel.update_panels
       Ncurses.doupdate
       Ncurses.refresh
-    end
-
-    def word_wrap(text, line_width)
-      text.scan(/.{1,#{line_width}}/).each_with_index.map do |line, index|
-        if index > 0
-          " #{line}"
-        else
-          line
-        end
-      end
     end
   end
 end

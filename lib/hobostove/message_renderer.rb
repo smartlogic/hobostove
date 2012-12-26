@@ -1,5 +1,10 @@
 module Hobostove
-  class MessageRenderer < Struct.new(:subdomain, :room_id)
+  class MessageRenderer < Struct.new(:subdomain, :room_id, :window_size)
+    def render_lines(message)
+      message = render(message)
+      message.scan(/.{1,#{window_size}}/)
+    end
+
     def render(message)
       case message.type
       when "TextMessage"

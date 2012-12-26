@@ -88,8 +88,9 @@ module Hobostove
         @users_panel.remove_user(message.username)
       end
 
-      renderer = MessageRenderer.new(Configuration.subdomain, room.id)
-      @messages_panel << renderer.render(message)
+      message_renderer.render_lines(message).each do |line|
+        @messages_panel << line
+      end
     rescue => e
       Hobostove.logger.fatal(e.inspect)
     end
@@ -99,6 +100,11 @@ module Hobostove
     end
 
     private
+
+    def message_renderer
+      @message_renderer ||=
+        MessageRenderer.new(Configuration.subdomain, room.id, Ncurses.COLS - 25)
+    end
 
     def start_ncurses
       Ncurses.initscr

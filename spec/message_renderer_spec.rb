@@ -2,7 +2,17 @@ require 'spec_helper'
 
 module Hobostove
   describe MessageRenderer do
-    let(:renderer) { MessageRenderer.new("subdomain", "1234") }
+    let(:renderer) { MessageRenderer.new("subdomain", "1234", 100) }
+
+    context "small window" do
+      let(:renderer) { MessageRenderer.new("subdomain", "1234", 30) }
+
+      it "should split the message to fit the window" do
+        message =
+          Message.new("id", Time.now, "TextMessage", "Eric", "testing out MessageRenderer")
+        renderer.render_lines(message).should == ["Eric: testing out MessageRende", "rer"]
+      end
+    end
 
     it "should render text messages" do
       message = Message.new("id", Time.now, "TextMessage", "Eric", "testing out MessageRenderer")
