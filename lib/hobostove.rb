@@ -13,3 +13,9 @@ require 'hobostove/window'
 require 'hobostove/setup'
 require 'hobostove/upgrade'
 require 'hobostove/room_picker'
+
+module Hobostove
+  def self.logger
+    @logger ||= Logger.new(Configuration.log_file, 1, 1024000)
+  end
+end

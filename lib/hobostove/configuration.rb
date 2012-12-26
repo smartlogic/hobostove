@@ -17,6 +17,11 @@ module Hobostove
         user = Etc.getlogin
         File.join(Dir.home(user), ".hobostove.yml")
       end
+
+      def log_file
+        user = Etc.getlogin
+        File.join(Dir.home(user), ".hobostove.log")
+      end
     end
   end
 end

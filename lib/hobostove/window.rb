@@ -23,6 +23,8 @@ module Hobostove
       room.join
 
       while @running && (ch = Ncurses.getch)
+        Hobostove.logger.debug("#{ch} - #{ch.chr} pressed")
+
         case ch
         when 14 # C+n
           @messages_panel.scroll_down
@@ -74,20 +76,27 @@ module Hobostove
     end
 
     def handle_message(message)
+      Hobostove.logger.debug(message.inspect)
+
+      # Tinder explicitly sets nil for "user"
+      user = message.fetch("user", {}) || {}
+      username = user.fetch("name", "Nil")
+
+      Hobostove.logger.debug("Username: #{username}")
+
       case message.type
       when "TextMessage"
-        username = user(message[:user_id])[:name]
         Notify.notify username, message[:body]
         @messages_panel <<   "#{username}: #{message[:body]}"
       when "EnterMessage"
-        username = user(message[:user_id])[:name]
         @messages_panel << "\t#{username} joined"
         @users_panel.add_user(username)
       when "LeaveMessage"
-        username = user(message[:user_id])[:name]
         @messages_panel << "\t#{username} left"
         @users_panel.remove_user(username)
       end
+    rescue => e
+      Hobostove.logger.fatal(e.inspect)
     end
 
     def room
