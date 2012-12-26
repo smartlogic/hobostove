@@ -16,5 +16,10 @@ module Hobostove
       message = Message.new("id", Time.now, "LeaveMessage", "Eric", nil)
       MessageRenderer.render(message).should == "\tEric left"
     end
+
+    it "should render timestamp messages" do
+      message = Message.new("id", Time.new(2012, 12, 26, 10, 55, 3), "TimestampMessage", "", nil)
+      MessageRenderer.render(message).should == "\t10:55"
+    end
   end
 end

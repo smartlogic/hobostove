@@ -8,6 +8,8 @@ module Hobostove
         "\t#{message.username} joined"
       when "LeaveMessage"
         "\t#{message.username} left"
+      when "TimestampMessage"
+        "\t#{message.timestamp.strftime("%H:%M")}"
       end
     end
   end
