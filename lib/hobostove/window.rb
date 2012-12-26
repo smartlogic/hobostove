@@ -82,14 +82,13 @@ module Hobostove
       case message.type
       when "TextMessage"
         Notify.notify message.username, message.body
-        @messages_panel << "#{message.username}: #{message.body}"
       when "EnterMessage"
-        @messages_panel << "\t#{message.username} joined"
         @users_panel.add_user(message.username)
       when "LeaveMessage"
-        @messages_panel << "\t#{message.username} left"
         @users_panel.remove_user(message.username)
       end
+
+      @messages_panel << MessageRenderer.render(message)
     rescue => e
       Hobostove.logger.fatal(e.inspect)
     end

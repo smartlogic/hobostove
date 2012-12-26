@@ -7,6 +7,7 @@ require 'notify'
 require 'values'
 
 require 'hobostove/message'
+require 'hobostove/message_renderer'
 
 require 'hobostove/configuration'
 require 'hobostove/panel'
