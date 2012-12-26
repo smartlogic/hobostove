@@ -88,7 +88,8 @@ module Hobostove
         @users_panel.remove_user(message.username)
       end
 
-      @messages_panel << MessageRenderer.render(message)
+      renderer = MessageRenderer.new(Configuration.subdomain, room.id)
+      @messages_panel << renderer.render(message)
     rescue => e
       Hobostove.logger.fatal(e.inspect)
     end
