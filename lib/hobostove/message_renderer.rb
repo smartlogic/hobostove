@@ -2,6 +2,7 @@ module Hobostove
   class MessageRenderer < Struct.new(:subdomain, :room_id, :window_size)
     def render_lines(message)
       message = render(message)
+      return [] if message.nil?
       message.scan(/.{1,#{window_size}}/)
     end
 
@@ -17,6 +18,8 @@ module Hobostove
         "\t#{message.timestamp.strftime("%H:%M")}"
       when "PasteMessage"
         "#{message.username} (paste message):\n#{message.body}"
+      when "TweetMessage"
+        "#{message.username} (tweet message): #{message.body}"
       end
     end
   end

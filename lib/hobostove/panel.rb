@@ -18,8 +18,6 @@ module Hobostove
     end
 
     def <<(string)
-      return if string.nil?
-
       if wrap_lines?
         @strings << string.first(width - 4)
       else

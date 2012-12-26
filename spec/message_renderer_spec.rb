@@ -12,6 +12,11 @@ module Hobostove
           Message.new("id", Time.now, "TextMessage", "Eric", "testing out MessageRenderer")
         renderer.render_lines(message).should == ["Eric: testing out MessageRende", "rer"]
       end
+
+      it "should return an empty array if message type isn't handled" do
+        message = Message.new("id", Time.now, "Unknown", "Eric", "won't show")
+        renderer.render_lines(message).should == []
+      end
     end
 
     it "should render text messages" do
@@ -35,10 +40,15 @@ module Hobostove
     end
 
     it "should render paste messages" do
-      renderer = MessageRenderer.new("subdomain", "1234")
       message =
         Message.new("5678", Time.now, "PasteMessage", "Eric", "a paste message\nwith two lines")
       renderer.render(message).should == "Eric (paste message):\na paste message\nwith two lines"
+    end
+
+    it "should render tweet messages" do
+      message =
+        Message.new("5678", Time.now, "TweetMessage", "Eric", "https://twitter.com/link/to/tweet")
+      renderer.render(message).should == "Eric (tweet message): https://twitter.com/link/to/tweet"
     end
   end
 end
