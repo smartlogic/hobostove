@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "ncurses-ruby"
   s.add_runtime_dependency "notify"
   s.add_runtime_dependency "gli"
+  s.add_runtime_dependency "values"
 
   s.add_development_dependency "rspec"
   s.add_development_dependency "fakefs"

@@ -4,6 +4,9 @@ require 'tinder'
 require 'active_support/core_ext'
 require 'ncurses'
 require 'notify'
+require 'values'
+
+require 'hobostove/message'
 
 require 'hobostove/configuration'
 require 'hobostove/panel'
