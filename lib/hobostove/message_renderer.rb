@@ -20,6 +20,8 @@ module Hobostove
         "#{message.username} (paste message):\n#{message.body}"
       when "TweetMessage"
         "#{message.username} (tweet message): #{message.body}"
+      when "UploadMessage"
+        "#{message.username} (upload message): #{message.body}"
       end
     end
   end

@@ -50,5 +50,11 @@ module Hobostove
         Message.new("5678", Time.now, "TweetMessage", "Eric", "https://twitter.com/link/to/tweet")
       renderer.render(message).should == "Eric (tweet message): https://twitter.com/link/to/tweet"
     end
+
+    it "should render upload messages" do
+      message =
+        Message.new("5678", Time.now, "UploadMessage", "Eric", "Screen Shot.png")
+      renderer.render(message).should == "Eric (upload message): Screen Shot.png"
+    end
   end
 end
