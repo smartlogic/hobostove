@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Hobostove::Upgrade do
+describe Hobostove::Cli::Upgrade do
   describe ".upgrade_config?" do
-    subject { Hobostove::Upgrade.upgrade_config? }
+    subject { Hobostove::Cli::Upgrade.upgrade_config? }
 
     before do
       FileUtils.mkdir_p(Dir.home(Etc.getlogin))
@@ -54,7 +54,7 @@ describe Hobostove::Upgrade do
     } }
 
     it "should turn the single room config into multi room config" do
-      Hobostove::Upgrade.perform
+      Hobostove::Cli::Upgrade.perform
 
       config = YAML.load(File.read(Hobostove::Configuration.config_file))
       config.should have(1).room

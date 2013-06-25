@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Hobostove::Setup do
+describe Hobostove::Cli::Setup do
   describe "#run_setup?" do
-    subject { Hobostove::Setup.run_setup? }
+    subject { Hobostove::Cli::Setup.run_setup? }
 
     context "config file exists" do
       before do
@@ -24,7 +24,7 @@ describe Hobostove::Setup do
 
     before { FileUtils.mkdir_p(Dir.home(Etc.getlogin)) }
 
-    subject { Hobostove::Setup.new(stdin, stdout) }
+    subject { Hobostove::Cli::Setup.new(stdin, stdout) }
 
     it "should walk through setup" do
       subject.run

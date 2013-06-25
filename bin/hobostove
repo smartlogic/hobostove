@@ -11,15 +11,15 @@ program_desc "A command line Campfire client"
 desc "Start hobostove"
 command :start do |c|
   c.action do
-    if Hobostove::Setup.run_setup?
-      Hobostove::Setup.new($stdin, $stdout).run
+    if Hobostove::Cli::Setup.run_setup?
+      Hobostove::Cli::Setup.new($stdin, $stdout).run
     end
 
-    if Hobostove::Upgrade.upgrade_config?
-      Hobostove::Upgrade.perform
+    if Hobostove::Cli::Upgrade.upgrade_config?
+      Hobostove::Cli::Upgrade.perform
     end
 
-    Hobostove::RoomPicker.new($stdin, $stdout).run
+    Hobostove::Cli::RoomPicker.new($stdin, $stdout).run
 
     Hobostove::Window.new.connect
   end

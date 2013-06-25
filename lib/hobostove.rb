@@ -6,17 +6,18 @@ require 'ncurses'
 require 'notify'
 require 'values'
 
-require 'hobostove/message'
+require 'hobostove/models/message'
 require 'hobostove/message_renderer'
+
+require 'hobostove/cli/setup'
+require 'hobostove/cli/upgrade'
+require 'hobostove/cli/room_picker'
 
 require 'hobostove/configuration'
 require 'hobostove/panel'
 require 'hobostove/input_panel'
 require 'hobostove/user_panel'
 require 'hobostove/window'
-require 'hobostove/setup'
-require 'hobostove/upgrade'
-require 'hobostove/room_picker'
 
 module Hobostove
   def self.logger

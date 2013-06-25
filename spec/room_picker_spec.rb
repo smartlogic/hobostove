@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Hobostove::RoomPicker do
+describe Hobostove::Cli::RoomPicker do
   let(:stdout) { StringIO.new }
 
   before do
@@ -10,7 +10,7 @@ describe Hobostove::RoomPicker do
     end
   end
 
-  subject { Hobostove::RoomPicker.new(stdin, stdout) }
+  subject { Hobostove::Cli::RoomPicker.new(stdin, stdout) }
 
   before do
     Hobostove::Configuration.send(:instance_variable_set, :@config, nil)

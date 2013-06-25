@@ -77,7 +77,7 @@ module Hobostove
 
     def handle_message(message)
       Hobostove.logger.debug(message.inspect)
-      message = Message.convert(message)
+      message = Models::Message.convert(message)
 
       case message.type
       when "TextMessage"
