@@ -5,7 +5,6 @@ module Hobostove
     def connect
       @current_message = ""
       @running = true
-      @user_names = []
       @messages = []
 
       start_ncurses
@@ -37,7 +36,7 @@ module Hobostove
         when 127 # backspace
           @current_message = @current_message.first(@current_message.size - 1)
         when 9 # tab
-          @current_message = "#{@user_names.find { |user| user =~ /^#@current_message/ }}: "
+          @current_message = "#{@users_panel.user_names.find { |user| user =~ /^#@current_message/ }}: "
         else
           @current_message << ch.chr
         end
@@ -83,9 +82,9 @@ module Hobostove
       when "TextMessage"
         Notify.notify message.username, message.body
       when "EnterMessage"
-        @users_panel.add_user(message.username)
+        @users_panel.add_user(message.user)
       when "LeaveMessage"
-        @users_panel.remove_user(message.username)
+        @users_panel.remove_user(message.user)
       end
 
       message_renderer.render_lines(message).each do |line|
@@ -130,14 +129,9 @@ module Hobostove
 
     def load_users
       room.users.each do |user|
-        @user_names << user["name"]
-        @users_panel.add_user(user["name"])
+        Hobostove.logger.info user.inspect
+        @users_panel.add_user(Models::User.convert(user))
       end
-    end
-
-    def user(user_id)
-      @users ||= {}
-      @users[user_id] ||= room.user(user_id)
     end
 
     def campfire
