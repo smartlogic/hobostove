@@ -6,16 +6,15 @@ module Hobostove
       @current_message = ""
       @running = true
       @messages = []
-
-      start_ncurses
-
-      load_users
-
-      stream
-
-      main
-
-      stop_ncurses
+      
+      begin
+        start_ncurses
+        load_users
+        stream
+        main
+      ensure
+        stop_ncurses
+      end
     end
 
     def main
