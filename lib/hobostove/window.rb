@@ -84,6 +84,16 @@ module Hobostove
         @users_panel.add_user(message.user)
       when "LeaveMessage"
         @users_panel.remove_user(message.user)
+      when "UploadMessage"
+        upload = room.send(:get, "messages/#{message.id}/upload")
+        Hobostove.logger.debug(upload.inspect)
+        message = Models::Message.new(
+          message.id,
+          message.timestamp,
+          message.type,
+          message.user,
+          upload.upload.full_url
+        )
       end
 
       message_renderer.render_lines(message).each do |line|
