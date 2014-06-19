@@ -21,14 +21,14 @@ module Hobostove
       !options[:nowrap]
     end
 
-    def <<(string)
+    def <<(string, do_update = true)
       if wrap_lines?
         @strings << string.first(width - 4)
       else
         @strings << string
       end
 
-      refresh
+      refresh if do_update
     end
 
     def scroll_up
@@ -49,12 +49,6 @@ module Hobostove
       @win.refresh
     end
 
-    private
-
-    def printable_area
-      height - 2
-    end
-
     def refresh
       @win.clear
 
@@ -66,6 +60,12 @@ module Hobostove
       end
 
       refresh!
+    end
+
+    private
+
+    def printable_area
+      height - 2
     end
   end
 end

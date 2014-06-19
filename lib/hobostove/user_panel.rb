@@ -10,16 +10,16 @@ module Hobostove
       @users.map(&:name)
     end
 
-    def add_user(user)
+    def add_user(user, do_refresh = true)
       @users.add(user)
 
-      refresh
+      refresh if do_refresh
     end
 
-    def remove_user(user)
+    def remove_user(user, do_refresh = true)
       @users.delete(user)
 
-      refresh
+      refresh if do_refresh
     end
 
     def refresh

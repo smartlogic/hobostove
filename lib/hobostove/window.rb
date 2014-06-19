@@ -69,6 +69,8 @@ module Hobostove
             handle_message(message)
           end
 
+          @messages_panel.refresh
+
           sleep 1
         end
       end
@@ -98,7 +100,7 @@ module Hobostove
       end
 
       message_renderer.render_lines(message).each do |line|
-        @messages_panel << line
+        @messages_panel.<<(line, false)
       end
     rescue => e
       Hobostove.logger.fatal(e.inspect)
@@ -138,8 +140,9 @@ module Hobostove
     def load_users
       room.users.each do |user|
         Hobostove.logger.info user.name
-        @users_panel.add_user(Models::User.convert(user))
+        @users_panel.add_user(Models::User.convert(user), false)
       end
+      @users_panel.refresh
     end
 
     def campfire
