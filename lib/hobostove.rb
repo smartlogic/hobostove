@@ -1,8 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'tinder'
+require 'active_support'
 require 'active_support/core_ext'
-require 'ncurses'
+require 'curses'
 require 'notify'
 require 'values'
 

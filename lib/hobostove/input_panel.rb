@@ -13,7 +13,7 @@ module Hobostove
     end
 
     def update_cursor
-      Ncurses.move(Ncurses.LINES - 2, message.size + 2)
+      Curses.setpos(Curses.lines - 2, message.size + 2)
     end
   end
 end

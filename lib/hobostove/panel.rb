@@ -2,9 +2,13 @@ module Hobostove
   class Panel < Struct.new(:height, :width, :starty, :startx, :options)
     def initialize(*args)
       super
-      @win = Ncurses.newwin(height, width, starty, startx)
-      Ncurses.box(@win, 0, 0)
-      @panel = Ncurses::Panel.new_panel(@win)
+
+      @win = Curses::Window.new(height, width, starty, startx)
+      @win.box(0, 0)
+
+      Curses.refresh
+      @win.refresh
+
       @strings = []
       @scroll = 0
     end
@@ -41,6 +45,10 @@ module Hobostove
       refresh
     end
 
+    def refresh!
+      @win.refresh
+    end
+
     private
 
     def printable_area
@@ -48,17 +56,16 @@ module Hobostove
     end
 
     def refresh
-      Ncurses.werase(@win)
+      @win.clear
+
+      @win.box(0, 0)
 
       @strings.last(printable_area + @scroll).first(printable_area).each_with_index do |string, i|
-        @win.mvaddstr(i + 1, 2, string)
+        @win.setpos(i + 1, 2)
+        @win.addstr(string)
       end
 
-      Ncurses.box(@win, 0, 0)
-
-      Ncurses::Panel.update_panels
-      Ncurses.doupdate
-      Ncurses.refresh
+      refresh!
     end
   end
 end

@@ -6,21 +6,22 @@ module Hobostove
       @current_message = ""
       @running = true
       @messages = []
-      
+
       begin
-        start_ncurses
+        start_curses
         load_users
         stream
         main
       ensure
-        stop_ncurses
+        Hobostove.logger.debug("terminated")
+        stop_curses
       end
     end
 
     def main
       room.join
 
-      while @running && (ch = Ncurses.getch)
+      while @running && (ch = Curses.getch)
         Hobostove.logger.debug("#{ch} - #{ch.chr.inspect} pressed")
 
         case ch
@@ -111,34 +112,32 @@ module Hobostove
 
     def message_renderer
       @message_renderer ||=
-        MessageRenderer.new(Configuration.subdomain, room.id, Ncurses.COLS - 25)
+        MessageRenderer.new(Configuration.subdomain, room.id, Curses.cols - 25)
     end
 
-    def start_ncurses
-      Ncurses.initscr
-      Ncurses.cbreak
-      Ncurses.noecho
+    def start_curses
+      Curses.init_screen
+      Curses.cbreak
+      Curses.noecho
 
-      @users_panel = UserPanel.new(Ncurses.LINES, 20, 0, Ncurses.COLS - 20)
-      @messages_panel = Panel.new(Ncurses.LINES - 3, Ncurses.COLS - 20, 0, 0, :nowrap => true)
-      @message_panel = InputPanel.new(3, Ncurses.COLS - 20, Ncurses.LINES - 3, 0)
+      @users_panel = UserPanel.new(Curses.lines, 20, 0, Curses.cols - 20)
+      @messages_panel = Panel.new(Curses.lines - 3, Curses.cols - 20, 0, 0, :nowrap => true)
+      @message_panel = InputPanel.new(3, Curses.cols - 20, Curses.lines - 3, 0)
 
-      Ncurses::Panel.update_panels
+      Curses.setpos(Curses.lines - 2, 2)
 
-      Ncurses.move(Ncurses.LINES - 2, 2)
-
-      Ncurses.doupdate
-      Ncurses.refresh
+      @users_panel.refresh!
+      @messages_panel.refresh!
+      @message_panel.refresh!
     end
 
-    def stop_ncurses
-      Ncurses.echo
-      Ncurses.endwin
+    def stop_curses
+      Curses.echo
     end
 
     def load_users
       room.users.each do |user|
-        Hobostove.logger.info user.inspect
+        Hobostove.logger.info user.name
         @users_panel.add_user(Models::User.convert(user))
       end
     end
