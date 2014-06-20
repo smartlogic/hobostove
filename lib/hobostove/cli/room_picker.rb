@@ -7,8 +7,6 @@ module Hobostove
       end
 
       def run
-        @stdout.puts "Which room would you like to connect to?"
-
         @config = YAML.load(File.read(Hobostove::Configuration.config_file))
 
         if @config.count == 1
@@ -21,6 +19,8 @@ module Hobostove
       private
 
       def pick_room
+        @stdout.puts "Which room would you like to connect to?"
+
         @config.each_with_index do |account, index|
           @stdout.puts "#{index + 1}. #{account["subdomain"]} - #{account["room"]}"
         end
