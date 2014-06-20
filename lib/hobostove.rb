@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 
-require 'tinder'
 require 'active_support'
 require 'active_support/core_ext'
 require 'curses'
+require 'faraday'
+require 'json'
 require 'notify'
 require 'values'
 require 'yaml'

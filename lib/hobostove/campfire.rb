@@ -75,6 +75,7 @@ module Hobostove
     end
 
     def user(user_id)
+      return unless user_id
       return @users[user_id] if @users[user_id]
       user = connection.get("/users/#{user_id}.json").body
       user = JSON.parse(user)["user"]

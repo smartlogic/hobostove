@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
 
   # If adding, please consider gemfiles/minimum_dependencies
-  s.add_runtime_dependency "tinder", "~> 1.9"
+  s.add_runtime_dependency "faraday", "~> 0.9"
   s.add_runtime_dependency "activesupport", "~> 4.0"
   s.add_runtime_dependency "notify", "~> 0.5"
   s.add_runtime_dependency "gli", "~> 2.11"
