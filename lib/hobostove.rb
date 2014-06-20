@@ -6,6 +6,7 @@ require 'active_support/core_ext'
 require 'curses'
 require 'notify'
 require 'values'
+require 'yaml'
 
 require 'hobostove/models/message'
 require 'hobostove/models/user'
