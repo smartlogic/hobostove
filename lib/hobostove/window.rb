@@ -98,7 +98,7 @@ module Hobostove
 
     def message_renderer
       @message_renderer ||=
-        MessageRenderer.new(Configuration.subdomain, Curses.cols - 25)
+        MessageRenderer.new(Curses.cols - 25)
     end
 
     def start_curses
