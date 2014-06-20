@@ -17,7 +17,6 @@ Gem::Specification.new do |s|
   # If adding, please consider gemfiles/minimum_dependencies
   s.add_runtime_dependency "tinder"
   s.add_runtime_dependency "activesupport"
-  s.add_runtime_dependency "ncurses-ruby"
   s.add_runtime_dependency "notify"
   s.add_runtime_dependency "gli"
   s.add_runtime_dependency "values"
