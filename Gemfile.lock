@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hobostove (0.3.0)
+    hobostove (0.3.1)
       activesupport (~> 4.0)
       curses (~> 1.0)
       faraday (~> 0.9)
