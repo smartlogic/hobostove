@@ -1,0 +1,18 @@
+{
+  "room": {
+    "id": 27,
+    "name": "Chat room",
+    "users": [
+      {
+        "type": "Member",
+        "id": 63,
+        "name": "User 1"
+      },
+      {
+        "type": "Member",
+        "id": 79,
+        "name": "User 2"
+      }
+    ]
+  }
+}

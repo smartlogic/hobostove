@@ -11,6 +11,7 @@ require 'yaml'
 require 'hobostove/models/message'
 require 'hobostove/models/user'
 
+require 'hobostove/campfire'
 require 'hobostove/message_renderer'
 
 require 'hobostove/cli/setup'
