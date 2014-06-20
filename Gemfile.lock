@@ -2,12 +2,12 @@ PATH
   remote: .
   specs:
     hobostove (0.2.0)
-      activesupport
-      curses
-      gli
-      notify
-      tinder
-      values
+      activesupport (~> 4.0)
+      curses (~> 1.0)
+      gli (~> 2.11)
+      notify (~> 0.5)
+      tinder (~> 1.9)
+      values (~> 1.5)
 
 GEM
   remote: https://rubygems.org/

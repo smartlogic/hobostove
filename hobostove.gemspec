@@ -15,12 +15,12 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = ">= 1.3.6"
 
   # If adding, please consider gemfiles/minimum_dependencies
-  s.add_runtime_dependency "tinder"
-  s.add_runtime_dependency "activesupport"
-  s.add_runtime_dependency "notify"
-  s.add_runtime_dependency "gli"
-  s.add_runtime_dependency "values"
-  s.add_runtime_dependency "curses"
+  s.add_runtime_dependency "tinder", "~> 1.9"
+  s.add_runtime_dependency "activesupport", "~> 4.0"
+  s.add_runtime_dependency "notify", "~> 0.5"
+  s.add_runtime_dependency "gli", "~> 2.11"
+  s.add_runtime_dependency "values", "~> 1.5"
+  s.add_runtime_dependency "curses", "~> 1.0"
 
   s.add_development_dependency "rspec"
   s.add_development_dependency "fakefs"
