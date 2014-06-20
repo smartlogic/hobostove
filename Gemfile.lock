@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hobostove (0.2.0)
+    hobostove (0.3.0)
       activesupport (~> 4.0)
       curses (~> 1.0)
       gli (~> 2.11)
