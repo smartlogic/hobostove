@@ -1,0 +1,10 @@
+{
+  "messages": [
+    {
+      "id": 10,
+      "type": "UploadMessage",
+      "created_at": "2014/06/20 10:19",
+      "user_id": 5
+    }
+  ]
+}

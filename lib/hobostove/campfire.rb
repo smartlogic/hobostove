@@ -12,13 +12,15 @@ module Hobostove
       messages = connection.get("/room/#{room_id}/recent.json?limit=10").body
       messages = JSON.parse(messages)["messages"]
       messages.map do |message|
-        Hobostove::Models::Message.new(
+        message = Hobostove::Models::Message.new(
           message["id"],
           Time.parse(message["created_at"]),
           message["type"],
           user(message["user_id"]),
           message["body"]
         )
+        message = handle_upload(message) if message.type == "UploadMessage"
+        message
       end
     end
 
@@ -75,7 +77,20 @@ module Hobostove
     def user(user_id)
       return @users[user_id] if @users[user_id]
       user = connection.get("/users/#{user_id}.json").body
+      user = JSON.parse(user)["user"]
       @users[user_id] = Hobostove::Models::User.new(user_id, user["name"])
+    end
+
+    def handle_upload(message)
+      upload = connection.get("room/#{room_id}/messages/#{message.id}/upload.json").body
+      upload = JSON.parse(upload)["upload"]
+      Hobostove::Models::Message.new(
+        message.id,
+        message.timestamp,
+        message.type,
+        message.user,
+        upload["full_url"],
+      )
     end
   end
 end

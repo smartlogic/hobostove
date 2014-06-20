@@ -85,6 +85,8 @@ module Hobostove
         @users_panel.add_user(message.user)
       when "LeaveMessage"
         @users_panel.remove_user(message.user)
+      when "UploadMessage"
+        Notify.notify message.username, message.body
       end
 
       message_renderer.render_lines(message).each do |line|
