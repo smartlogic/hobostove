@@ -1,5 +1,5 @@
 module Hobostove
-  class MessageRenderer < Struct.new(:subdomain, :room_id, :window_size)
+  class MessageRenderer < Struct.new(:subdomain, :window_size)
     def render_lines(message)
       message = render(message)
       return [] if message.nil?

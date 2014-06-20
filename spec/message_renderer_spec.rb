@@ -2,12 +2,12 @@ require 'spec_helper'
 
 module Hobostove
   describe MessageRenderer do
-    let(:renderer) { MessageRenderer.new("subdomain", "1234", 100) }
+    let(:renderer) { MessageRenderer.new("subdomain", 100) }
 
     let(:user) { Models::User.new(10, "Eric") }
 
     context "small window" do
-      let(:renderer) { MessageRenderer.new("subdomain", "1234", 30) }
+      let(:renderer) { MessageRenderer.new("subdomain", 30) }
 
       it "should split the message to fit the window" do
         message =
