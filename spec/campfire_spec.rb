@@ -62,4 +62,24 @@ describe Hobostove::Campfire do
       Hobostove::Models::User.new(79, "User 2"),
     ])
   end
+
+  specify "joining the room" do
+    stubs.post("/room/27/join.json") do
+      [200, {}, ""]
+    end
+
+    campfire.join
+
+    stubs.verify_stubbed_calls
+  end
+
+  specify "leaving the room" do
+    stubs.post("/room/27/leave.json") do
+      [200, {}, ""]
+    end
+
+    campfire.leave
+
+    stubs.verify_stubbed_calls
+  end
 end

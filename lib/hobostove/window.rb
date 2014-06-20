@@ -19,7 +19,7 @@ module Hobostove
     end
 
     def main
-      room.join
+      campfire.join
 
       while @running && (ch = Curses.getch)
         Hobostove.logger.debug("#{ch} - #{ch.chr.inspect} pressed")
@@ -45,7 +45,7 @@ module Hobostove
         @message_panel.update_cursor
       end
 
-      room.leave
+      campfire.leave
     end
 
     def speak
@@ -54,18 +54,17 @@ module Hobostove
         return
       end
 
-      room.speak @current_message
+      campfire.send_message @current_message
       @current_message = ""
     end
 
     def stream
       Thread.new do
         loop do
-          recent = room.recent(10)
+          recent = campfire.recent_messages
           recent.each do |message|
-            next if messages.include?(message[:id])
-            messages << message[:id]
-
+            next if messages.include?(message.id)
+            messages << message.id
             handle_message(message)
           end
 
@@ -78,7 +77,6 @@ module Hobostove
 
     def handle_message(message)
       Hobostove.logger.debug(message.inspect)
-      message = Models::Message.convert(message)
 
       case message.type
       when "TextMessage"
@@ -87,16 +85,6 @@ module Hobostove
         @users_panel.add_user(message.user)
       when "LeaveMessage"
         @users_panel.remove_user(message.user)
-      when "UploadMessage"
-        upload = room.send(:get, "messages/#{message.id}/upload")
-        Hobostove.logger.debug(upload.inspect)
-        message = Models::Message.new(
-          message.id,
-          message.timestamp,
-          message.type,
-          message.user,
-          upload.upload.full_url
-        )
       end
 
       message_renderer.render_lines(message).each do |line|
@@ -104,10 +92,6 @@ module Hobostove
       end
     rescue => e
       Hobostove.logger.fatal(e.inspect)
-    end
-
-    def room
-      @room ||= campfire.find_room_by_name(Configuration.room)
     end
 
     private
@@ -138,15 +122,15 @@ module Hobostove
     end
 
     def load_users
-      room.users.each do |user|
+      campfire.current_users.each do |user|
         Hobostove.logger.info user.name
-        @users_panel.add_user(Models::User.convert(user), false)
+        @users_panel.add_user(user, false)
       end
       @users_panel.refresh
     end
 
     def campfire
-      @campfire ||= Tinder::Campfire.new Configuration.subdomain, :token => Configuration.token
+      @campfire ||= Campfire.new
     end
   end
 end

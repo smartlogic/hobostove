@@ -1,13 +1,15 @@
 module Hobostove
   class Campfire
+    attr_reader :room_id
+
     def initialize
       load_current_room
 
-      @users = []
+      @users = {}
     end
 
     def recent_messages
-      messages = connection.get("/room/#{@room_id}/recent.json?limit=10").body
+      messages = connection.get("/room/#{room_id}/recent.json?limit=10").body
       messages = JSON.parse(messages)["messages"]
       messages.map do |message|
         Hobostove::Models::Message.new(
@@ -21,7 +23,7 @@ module Hobostove
     end
 
     def send_message(message)
-      connection.post("/room/#{@room_id}/speak.json") do |req|
+      connection.post("/room/#{room_id}/speak.json") do |req|
         req.body = {
           :message => {
             :type => "TextMessage",
@@ -32,11 +34,19 @@ module Hobostove
     end
 
     def current_users
-      room = connection.get("/room/#{@room_id}.json").body
+      room = connection.get("/room/#{room_id}.json").body
       room = JSON.parse(room)["room"]
       room["users"].map do |user|
-        Hobostove::Models::User.new(user["id"], user["name"])
+        @users[user["id"]] = Hobostove::Models::User.new(user["id"], user["name"])
       end
+    end
+
+    def join
+      connection.post("/room/#{room_id}/join.json")
+    end
+
+    def leave
+      connection.post("/room/#{room_id}/leave.json")
     end
 
     private
