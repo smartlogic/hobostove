@@ -7,14 +7,14 @@ module Hobostove::Models
         user_1 = User.new(10, "Eric")
         user_2 = User.new(10, "Eric")
 
-        user_1.should be_eql(user_2)
+        expect(user_1).to be_eql(user_2)
       end
 
       it "should make differing ids not be equal" do
         user_1 = User.new(10, "Eric")
         user_2 = User.new(11, "Not Eric")
 
-        user_1.should_not be_eql(user_2)
+        expect(user_1).to_not be_eql(user_2)
       end
     end
 
@@ -22,7 +22,7 @@ module Hobostove::Models
       it "should use the id for the hash" do
         user = User.new(10, "Eric")
 
-        user.hash.should == 10.hash
+        expect(user.hash).to eq(10.hash)
       end
     end
   end

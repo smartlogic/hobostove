@@ -16,7 +16,7 @@ describe Hobostove::Campfire do
       [200, {}, File.read("spec/fixtures/rooms.json")]
     end
 
-    Hobostove::Configuration.stub(:config).and_return({
+    allow(Hobostove::Configuration).to receive(:config).and_return({
       "subdomain" => "company",
       "token" => "token",
       "room" => "Chat room",

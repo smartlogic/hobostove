@@ -20,7 +20,7 @@ describe Hobostove::Cli::Upgrade do
         end
       end
 
-      it { should be_false }
+      specify { expect(subject).to be_falsy }
     end
 
     context "single room config" do
@@ -35,7 +35,7 @@ describe Hobostove::Cli::Upgrade do
         end
       end
 
-      it { should be_true }
+      specify { expect(subject).to be_truthy }
     end
   end
 
@@ -57,9 +57,9 @@ describe Hobostove::Cli::Upgrade do
       Hobostove::Cli::Upgrade.perform
 
       config = YAML.load(File.read(Hobostove::Configuration.config_file))
-      config.should have(1).room
+      expect(config.count).to eq(1)
 
-      config.first.should == settings
+      expect(config.first).to eq(settings)
     end
   end
 end

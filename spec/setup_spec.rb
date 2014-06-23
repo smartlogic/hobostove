@@ -10,11 +10,11 @@ describe Hobostove::Cli::Setup do
         FileUtils.touch(Hobostove::Configuration.config_file)
       end
 
-      it { should be_false }
+      specify { expect(subject).to be_falsy }
     end
 
     context "config file does not exist" do
-      it { should be_true }
+      specify { expect(subject).to be_truthy }
     end
   end
 
@@ -30,11 +30,11 @@ describe Hobostove::Cli::Setup do
       subject.run
 
       config = YAML.load(File.read(Hobostove::Configuration.config_file))
-      config.should == [{
+      expect(config).to eq([{
         "subdomain" => "subdomain",
         "token" => "key",
         "room" => "room"
-      }]
+      }])
     end
   end
 end

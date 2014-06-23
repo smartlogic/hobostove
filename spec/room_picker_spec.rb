@@ -40,11 +40,11 @@ describe Hobostove::Cli::RoomPicker do
       stdout.rewind
       lines = stdout.read.split("\n")
 
-      lines[1].should == "1. subone - roomone"
-      lines[2].should == "2. subtwo - roomtwo"
+      expect(lines[1]).to eq("1. subone - roomone")
+      expect(lines[2]).to eq("2. subtwo - roomtwo")
 
-      Hobostove::Configuration.current_room.should == 1
-      Hobostove::Configuration.room.should == "roomtwo"
+      expect(Hobostove::Configuration.current_room).to eq(1)
+      expect(Hobostove::Configuration.room).to eq("roomtwo")
     end
   end
 
@@ -63,8 +63,8 @@ describe Hobostove::Cli::RoomPicker do
     it "should pick the only room for you" do
       subject.run
 
-      Hobostove::Configuration.current_room.should == 0
-      Hobostove::Configuration.room.should == "roomone"
+      expect(Hobostove::Configuration.current_room).to eq(0)
+      expect(Hobostove::Configuration.room).to eq("roomone")
     end
   end
 end
