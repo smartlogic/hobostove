@@ -12,6 +12,8 @@ module Hobostove
         load_users
         stream
         main
+      rescue => e
+        Hobostove.logger.error(e.inspect)
       ensure
         Hobostove.logger.debug("terminated")
         stop_curses
@@ -61,16 +63,20 @@ module Hobostove
     def stream
       Thread.new do
         loop do
-          recent = campfire.recent_messages
-          recent.each do |message|
-            next if messages.include?(message.id)
-            messages << message.id
-            handle_message(message)
+          begin
+            recent = campfire.recent_messages
+            recent.each do |message|
+              next if messages.include?(message.id)
+              messages << message.id
+              handle_message(message)
+            end
+
+            @messages_panel.refresh
+
+            sleep 1
+          rescue => e
+            Hobostove.logger.error(e.inspect)
           end
-
-          @messages_panel.refresh
-
-          sleep 1
         end
       end
     end
