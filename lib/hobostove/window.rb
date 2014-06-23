@@ -113,6 +113,7 @@ module Hobostove
       Curses.init_screen
       Curses.cbreak
       Curses.noecho
+      Curses.curs_set(0)
 
       @users_panel = UserPanel.new(Curses.lines, 20, 0, Curses.cols - 20)
       @messages_panel = Panel.new(Curses.lines - 3, Curses.cols - 20, 0, 0, :nowrap => true)
