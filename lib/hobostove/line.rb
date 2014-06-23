@@ -12,6 +12,24 @@ module Hobostove
       @segments.map(&:body).join
     end
 
+    def first(count)
+      new_line = Line.new
+
+      segments.inject(0) do |current_count, segment|
+        next if current_count > count
+        current_count += segment.body.length
+        if current_count <= count
+          new_line.add(segment.color, segment.body)
+        else
+          count = segment.body.length - (current_count - count)
+          new_line.add(segment.color, segment.body.first(count))
+        end
+        current_count
+      end
+
+      new_line
+    end
+
     def add(color, body)
       segments << LineSegment.new(color, body)
     end
