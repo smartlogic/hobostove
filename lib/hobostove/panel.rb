@@ -54,7 +54,7 @@ module Hobostove
 
       @win.box(0, 0)
 
-      @strings.last(printable_area + @scroll).first(printable_area).each_with_index do |string, i|
+      printable_lines.each_with_index do |string, i|
         @win.setpos(i + 1, 2)
         @win.addstr(string)
       end
@@ -63,6 +63,10 @@ module Hobostove
     end
 
     private
+
+    def printable_lines
+      @strings.last(printable_area + @scroll).first(printable_area)
+    end
 
     def printable_area
       height - 2
