@@ -26,6 +26,7 @@ module Hobostove
 
     def send_message(message)
       connection.post("/room/#{room_id}/speak.json") do |req|
+        req.headers["Content-Type"] = "application/json"
         req.body = {
           :message => {
             :type => "TextMessage",
