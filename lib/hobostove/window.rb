@@ -111,9 +111,14 @@ module Hobostove
 
     def start_curses
       Curses.init_screen
+      Curses.start_color
       Curses.cbreak
       Curses.noecho
       Curses.curs_set(0)
+
+      Curses.use_default_colors
+      Curses.init_pair(Curses::COLOR_CYAN, Curses::COLOR_CYAN, -1)
+      Curses.init_pair(Curses::COLOR_WHITE, -1, -1)
 
       @users_panel = UserPanel.new(Curses.lines, 20, 0, Curses.cols - 20)
       @messages_panel = Panel.new(Curses.lines - 3, Curses.cols - 20, 0, 0, :nowrap => true)

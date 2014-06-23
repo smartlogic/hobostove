@@ -23,9 +23,9 @@ module Hobostove
 
     def <<(string, do_update = true)
       if wrap_lines?
-        @strings << string.first(width - 4)
+        @strings << Line(string.first(width - 4))
       else
-        @strings << string
+        @strings << Line(string)
       end
 
       refresh if do_update
@@ -54,9 +54,21 @@ module Hobostove
 
       @win.box(0, 0)
 
-      printable_lines.each_with_index do |string, i|
+      printable_lines.each_with_index do |line, i|
         @win.setpos(i + 1, 2)
-        @win.addstr(string)
+
+        line.segments.each do |segment|
+          color = case segment.color
+                  when :cyan
+                    Curses::COLOR_CYAN
+                  else
+                    Curses::COLOR_WHITE
+                  end
+
+          @win.attron(Curses.color_pair(color) | Curses::A_NORMAL) do
+            @win.addstr(segment.body)
+          end
+        end
       end
 
       refresh!

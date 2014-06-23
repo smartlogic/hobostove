@@ -9,7 +9,7 @@ module Hobostove
     end
 
     def message
-      @strings.first
+      @strings.first.to_s
     end
 
     def update_cursor

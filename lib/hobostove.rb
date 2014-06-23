@@ -20,6 +20,7 @@ require 'hobostove/cli/upgrade'
 require 'hobostove/cli/room_picker'
 
 require 'hobostove/configuration'
+require 'hobostove/line'
 require 'hobostove/panel'
 require 'hobostove/input_panel'
 require 'hobostove/user_panel'

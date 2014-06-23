@@ -23,7 +23,11 @@ module Hobostove
     end
 
     def refresh
-      @strings = @users.map(&:name)
+      @strings = @users.map do |user|
+        Line.new.tap do |line|
+          line.add(:cyan, user.name)
+        end
+      end
       @strings.sort!
 
       super
