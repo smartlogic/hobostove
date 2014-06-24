@@ -12,22 +12,28 @@ module Hobostove
       @segments.map(&:body).join
     end
 
+    def length
+      to_s.length
+    end
+
+    def present?
+      to_s.present?
+    end
+
     def first(count)
-      new_line = Line.new
+      segment(count).first
+    end
 
-      segments.inject(0) do |current_count, segment|
-        next if current_count > count
-        current_count += segment.body.length
-        if current_count <= count
-          new_line.add(segment.color, segment.body)
-        else
-          count = segment.body.length - (current_count - count)
-          new_line.add(segment.color, segment.body.first(count))
-        end
-        current_count
-      end
+    def split(width)
+      lines = []
+      line = self
+      begin
+        first, second = line.send(:segment, width)
 
-      new_line
+        lines << first
+        line = second
+      end while second.length > 0
+      lines
     end
 
     def add(color, body)
@@ -36,6 +42,33 @@ module Hobostove
 
     def <=>(other)
       to_s <=> other.to_s
+    end
+
+    def segment(count)
+      first_line = Line.new
+      second_line = Line.new
+
+      segments.inject(0) do |current_count, segment|
+        if current_count > count
+          second_line.add(segment.color, segment.body)
+          next
+        end
+
+        current_count += segment.body.length
+
+        if current_count <= count
+          first_line.add(segment.color, segment.body)
+        else
+          count = segment.body.length - (current_count - count)
+
+          first_line.add(segment.color, segment.body.first(count))
+          second_line.add(segment.color, segment.body[count..-1])
+        end
+
+        current_count
+      end
+
+      [first_line, second_line]
     end
   end
 end

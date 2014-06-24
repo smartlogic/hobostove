@@ -12,4 +12,13 @@ describe Hobostove::Line do
     expect(line.first(11).to_s).to eq("Eric: howdy")
     expect(line.first(12).to_s).to eq("Eric: howdy")
   end
+
+  specify "splitting by console size" do
+    line = Hobostove::Line.new.tap do |line|
+      line.add(:cyan, "Eric: ")
+      line.add(:white, "howdy")
+    end
+
+    expect(line.split(5).map(&:to_s)).to eq(["Eric:", " howd", "y"])
+  end
 end
