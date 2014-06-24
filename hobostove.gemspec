@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "faraday", "~> 0.9"
   s.add_runtime_dependency "activesupport", "~> 4.0"
   s.add_runtime_dependency "notify", "~> 0.5"
+  s.add_runtime_dependency "terminal-notifier", "~> 1.6"
   s.add_runtime_dependency "gli", "~> 2.11"
   s.add_runtime_dependency "values", "~> 1.5"
   s.add_runtime_dependency "curses", "~> 1.0"
