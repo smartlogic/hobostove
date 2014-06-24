@@ -13,14 +13,15 @@ require 'hobostove/models/message'
 require 'hobostove/models/user'
 
 require 'hobostove/campfire'
+require 'hobostove/emoji'
 require 'hobostove/message_renderer'
+require 'hobostove/line'
 
 require 'hobostove/cli/setup'
 require 'hobostove/cli/upgrade'
 require 'hobostove/cli/room_picker'
 
 require 'hobostove/configuration'
-require 'hobostove/line'
 require 'hobostove/panel'
 require 'hobostove/input_panel'
 require 'hobostove/user_panel'

@@ -11,7 +11,7 @@ module Hobostove
       case message.type
       when "TextMessage"
         line.add(:cyan, message.username)
-        line.add(:white, ": #{message.body}")
+        line.add(:white, ": #{Emoji.replace(message.body)}")
       when "EnterMessage"
         line.add(:white, "    ")
         line.add(:cyan, message.username)

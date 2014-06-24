@@ -33,3 +33,7 @@ When starting hobostove with mutliple rooms it will ask you which one you want t
 Install the gem `terminal-notifier` and Mountain Lion notifications will work. It also fixes formatting issues.
 
     $ gem install terminal-notifier
+
+## Emoji
+
+The file `data/emoji.csv` is taken from [ZWEmoji](https://github.com/zachwaugh/ZWEmoji).

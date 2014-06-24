@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 3.0"
   s.add_development_dependency "fakefs"
 
-  s.files        = Dir.glob("lib/**/*")
+  s.files        = Dir.glob("lib/**/*") + Dir.glob("data/*")
   s.require_path = 'lib'
   s.executables  = ['hobostove']
 end

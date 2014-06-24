@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module Hobostove
   describe MessageRenderer do
+    before { FakeFS.deactivate! }
+
     let(:renderer) { MessageRenderer.new(100) }
 
     let(:user) { Models::User.new(10, "Eric") }
@@ -57,6 +59,11 @@ module Hobostove
       message =
         Models::Message.new("5678", Time.now, "UploadMessage", user, "Screen Shot.png")
       expect(renderer.render(message).to_s).to eq("Eric (upload message): Screen Shot.png")
+    end
+
+    it "should render emoji" do
+      message = Models::Message.new("id", Time.now, "TextMessage", user, ":cool:")
+      expect(renderer.render(message).to_s).to eq("Eric: \u{1F192}")
     end
   end
 end
